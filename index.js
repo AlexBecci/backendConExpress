@@ -1,6 +1,8 @@
 const express = require('express');
 const routerApi = require('./routes')
 
+const {logErrors,errorHandler}= require('./middlewares/errorHandler.js')
+
 const app = express();
 
 const port = 3000;
@@ -14,6 +16,10 @@ app.get('/nueva-ruta', (req, res) => {
   res.send('Hola, soy una nueva ruta/endpoint')
 })
 routerApi(app);
+
+app.use(logErrors);
+app.use(errorHandler);
+
 
 app.listen(port, () => {
   console.log("Estamos corriendo en el puerto.." + port)
